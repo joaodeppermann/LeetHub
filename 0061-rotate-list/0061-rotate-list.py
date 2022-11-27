@@ -14,8 +14,15 @@ class Solution:
         while cur.next:
             cur = cur.next
             size += 1
+            
         # find right place to undo connection 
         last_element = k % size
+        # small optimization
+        if last_element == 0:
+            return head
+        
+        
+        
         fast, slow = head, head
         while last_element:
             fast = fast.next
