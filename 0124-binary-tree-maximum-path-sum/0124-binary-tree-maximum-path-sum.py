@@ -15,11 +15,11 @@ class Solution:
             # max sum between the left and right sub-trees of node
             left_gain = max(max_gain(node.left), 0)
             right_gain = max(max_gain(node.right), 0)
-            # sum where the current node is the spliting node
+            # sum where the current node is the splitting node
             sum_newpath = node.val + left_gain + right_gain
-            # update max_sum if it's better to use current node as spliting node
+            # update max_sum if it's better to use current node as splitting node
             self.maxSum = max(self.maxSum, sum_newpath)
-            # return max val for this node without spliting 
+            # return max val for this node without splitting 
             return node.val + max(left_gain, right_gain)
         max_gain(root)
         return self.maxSum
