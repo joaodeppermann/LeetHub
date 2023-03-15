@@ -36,14 +36,3 @@ class Solution:
             if leftSum >= rightSum:
                 res += 1
         return res
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
