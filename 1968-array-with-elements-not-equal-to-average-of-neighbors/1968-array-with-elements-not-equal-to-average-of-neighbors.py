@@ -1,6 +1,6 @@
 class Solution:
     def rearrangeArray(self, nums: List[int]) -> List[int]:
-#       All integers is distinct, use this condition.
+#       All integers are distinct, use this condition.
 #       Sort and swap neighbours into small, big, small, big pattern
 #       Time O(sort), Space O(sort)
         nums.sort()
