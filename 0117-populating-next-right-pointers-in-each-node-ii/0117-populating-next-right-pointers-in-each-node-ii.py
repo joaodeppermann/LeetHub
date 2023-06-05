@@ -1,8 +1,6 @@
 class Solution:
-    
     def processChild(self, childNode, prev, leftmost):
         if childNode:
-            
             # If the "prev" pointer is alread set i.e. if we
             # already found atleast one node on the next level,
             # setup its next pointer
@@ -17,10 +15,8 @@ class Solution:
         return prev, leftmost
     
     def connect(self, root: Optional['Node']) -> Optional['Node']:
-        
         if not root:
             return root
-        
         # The root node is the only node on the first level
         # and hence its the leftmost node for that level
         leftmost = root
@@ -51,5 +47,4 @@ class Solution:
                 
                 # Move onto the next node.
                 curr = curr.next
-                
         return root 
