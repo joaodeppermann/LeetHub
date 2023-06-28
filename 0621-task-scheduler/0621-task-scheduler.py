@@ -18,6 +18,6 @@ class Solution:
             timestamp += 1
         return timestamp
         
-            
-            
-        
+# If len(frequencies) = k
+# TC = O(k*log(k))
+# SC = O(k)
