@@ -1,39 +1,37 @@
 class Codec:
     def serialize(self, root):
+        if not root:
+            return ""
         res = []
-        def preorder(node):
-            if not node:
-                return 
-            res.append(str(node.val))
-            res.append("#")
-            preorder(node.left)
-            preorder(node.right)
-        preorder(root)
-        return ''.join(res[:-1])
-        
-        
+        stack = [root]
+        # preorder iterative traversal 
+        while stack:
+            cur_node = stack.pop()
+            res.append(str(cur_node.val))
+            res.append("/")
+            if cur_node.right is not None:
+                stack.append(cur_node.right)
+            if cur_node.left is not None:
+                stack.append(cur_node.left)
+        return "".join(res[:-1])
+            
     def deserialize(self, data):
         if not data:
             return None
-        input_list = list(map(int, data.split("#")))
-        cur_index = 0
-        def preorder(lower, upper):
-            nonlocal cur_index
-            if cur_index > len(input_list) - 1:
+        input_list = data.split("/")
+        self.cur_index = 0
+        def preorder(low, high):
+            if self.cur_index == len(input_list):
                 return None
-            if not lower <= input_list[cur_index] <= upper:
+            if not low <= int(input_list[self.cur_index]) < high:
                 return None
-            
-            val = input_list[cur_index]
-            root = TreeNode(val)
-            cur_index += 1
-            
-            root.left = preorder(lower, root.val)
-            root.right = preorder(root.val, upper)
-            
-            return root
-            
+            node = TreeNode(int(input_list[self.cur_index]))
+            self.cur_index += 1
+            node.left = preorder(low, node.val)
+            node.right = preorder(node.val, high)
+            return node
         return preorder(-inf, +inf)
+            
             
             
             
