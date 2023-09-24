@@ -27,8 +27,6 @@ class Solution:
         
     # Helper function to merge two sorted lists
     def merge(self, head1: Optional[ListNode], head2: Optional[ListNode]) -> ListNode:
-        if not head2:
-            return head1
         dummy_head = ListNode(-1)
         cur = dummy_head
         while head1 and head2:
@@ -44,3 +42,8 @@ class Solution:
         else:
             cur.next = head2
         return dummy_head.next
+    
+    # TC = O(N*log(N))
+    # SC = O(N)
+    
+    
