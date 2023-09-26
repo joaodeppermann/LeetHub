@@ -9,5 +9,4 @@ class Solution:
             aux = dp[1]
             dp[1] = max(n + dp[0], dp[1])
             dp[0] = aux
-            
         return dp[1]
