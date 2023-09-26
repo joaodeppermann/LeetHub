@@ -1,23 +1,29 @@
 class Solution:
     def networkDelayTime(self, times: List[List[int]], n: int, k: int) -> int:
-        adj_list = {i:[] for i in range(1, n + 1)}
-        for start, end, weight in times:
-            adj_list[start].append((weight, end))
-
-        distances = [+inf]*(n + 1)
-        distances[0], distances[k] = 0, 0
+        # Dijkstra / Heap
+        # Create graph
+        graph = {i:[] for i in range(1, n + 1)} # Key = node, val = [(weight, neighbor)]
         
-        min_heap = [(0, k)]
-        heapq.heapify(min_heap)
-        
-        while min_heap:
-            cur_weight, cur_node = heapq.heappop(min_heap)
+        # Fill up the graph 
+        for source, target, weight in times:
+            graph[source].append((weight, target))
             
-            for next_weight, next_node in adj_list[cur_node]:
-                if cur_weight + next_weight < distances[next_node]:
-                    distances[next_node] = cur_weight + next_weight
-                    heapq.heappush(min_heap, (distances[next_node], next_node))
-                    
-        return max(distances) if max(distances) != +inf else -1
-                
-                
+        # Hash set to keep track of the nodes we have already visited
+        visited = set()
+        distances = [+inf]*(n+1)
+        distances[k] = 0
+        priority_queue = [(0, k)]
+        while priority_queue:
+            cur_dist, cur_node = heapq.heappop(priority_queue)
+            # Skip nodes we have already visited
+            if cur_node in visited:
+                continue
+            visited.add(cur_node)
+            # Visit the neighbors
+            for weight, neighbor in graph[cur_node]:
+                new_dist = cur_dist + weight
+                if new_dist < distances[neighbor]:
+                    heapq.heappush(priority_queue, (new_dist, neighbor))
+                    distances[neighbor] = new_dist
+        
+        return max(distances[1:]) if max(distances[1:]) != +inf else -1
