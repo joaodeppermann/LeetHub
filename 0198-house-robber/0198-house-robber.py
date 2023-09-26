@@ -3,11 +3,11 @@ class Solution:
         if len(nums) == 1:
             return nums[0]
         
-        first = nums[0]
-        second = max(nums[0], nums[1])
-        for i in range(2, len(nums)):
-            aux = second
-            second = max(first + nums[i], second)
-            first = aux
+        dp = [0, 0] # prev, cur
+        for n in nums:
+            # Steal the current house or keep the value from the previous house
+            aux = dp[1]
+            dp[1] = max(n + dp[0], dp[1])
+            dp[0] = aux
             
-        return second
+        return dp[1]
