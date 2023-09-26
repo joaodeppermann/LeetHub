@@ -6,7 +6,7 @@ class Solution:
         1
         1
         # Pattern: each node will have as children the following row index i and i + 1
-        tower = [[0]*k for k in range(1, query_row + 7)]
+        tower = [[0]*k for k in range(1, query_row + 3)]
         tower[0][0] = poured
         for i in range(query_row + 1):
             for j in range(i + 1):
