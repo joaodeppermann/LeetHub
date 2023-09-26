@@ -1,16 +1,26 @@
 class Solution:
     def coinChange(self, coins: List[int], amount: int) -> int:
-        @lru_cache(None)
-        def dfs(rem):
-            if rem < 0:
+    
+        memo = {}
+        def dfs(curSum):
+            # Check cache
+            if curSum in memo:
+                return memo[curSum]
+        
+            # Base cases
+            if curSum > amount:
                 return -1
-            if rem == 0:
+            if curSum == amount:
                 return 0
-            min_cost = float('inf')
+        
+            # Analyse all the paths and get minimum cost
+            min_cost = +inf
             for coin in coins:
-                res = dfs(rem - coin)
+                res = dfs(curSum + coin)
                 if res != -1:
                     min_cost = min(min_cost, res + 1)
-            return min_cost if min_cost != float('inf') else -1
-
-        return dfs(amount)
+            
+            # Cache the return value of the dfs function
+            memo[curSum] = min_cost
+            return memo[curSum] if min_cost != +inf else -1
+        return dfs(0)
