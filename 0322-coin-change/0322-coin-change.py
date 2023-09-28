@@ -3,28 +3,24 @@ class Solution:
         # Edge case
         if amount == 0:
             return 0
-        memo = {}
+        cache = {}
         def dfs(remainder):
-            # Check cache
-            if remainder in memo:
-                return memo[remainder]
+            # Check cache to avoid repeated work
+            if remainder in cache:
+                return cache[remainder]
             # Base cases
             if remainder == 0:
                 return 0
             if remainder < 0:
                 return -1
             
-            # Minimize number of coins for this amount/remainder
             min_coins = +inf
-            # Check all the coins
             for coin in coins:
-                res = dfs(remainder - coin)
-                if res != -1:
-                    min_coins = min(min_coins, res + 1)
+                ret = dfs(remainder - coin)
+                if ret != -1:
+                    min_coins = min(min_coins, ret + 1)
                     
-            memo[remainder] = min_coins
-            return memo[remainder]
-        
+            cache[remainder] = min_coins
+            return cache[remainder]
         dfs(amount)
-        return memo[amount] if memo[amount] != +inf else -1
-                
+        return cache[amount] if cache[amount] != +inf else -1
