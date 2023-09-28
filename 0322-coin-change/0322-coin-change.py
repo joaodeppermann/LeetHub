@@ -8,29 +8,20 @@ class Solution:
                 return cache[remainder]
             # base cases
             if remainder == 0:
-                return [] # Start building path
+                return 0
             if remainder < 0:
                 return None
             
-            min_len = +inf
+            # Check all the coins and try to minimize return value
+            min_coins = +inf
             for coin in coins:
                 ret = dfs(remainder - coin)
                 if ret is not None:
-                    if min_len > len(ret) + 1:
-                        min_len = len(ret) + 1
-                        best_path = ret.copy()
-                        best_path_coin = coin
-                        
-            if min_len != +inf:
-                best_path.append(best_path_coin)
-                cache[remainder] = best_path
-                return best_path
+                    min_coins = min(min_coins, ret + 1)
             
-            cache[remainder] = None
-            return None
-    
-    
+            cache[remainder] = min_coins if min_coins != +inf else None
+            return cache[remainder]
+        
         dfs(amount)
-        print(cache[amount])
-        return len(cache[amount]) if cache[amount] != None else -1
+        return cache[amount] if cache[amount] is not None else -1
                 
