@@ -35,10 +35,8 @@ class LRUCache:
         self.remove(self.cache[key])
         # Delete old reference
         del self.cache[key]
-        # Create new node
-        node = ListNode(key, ret)
-        # Store reference to the node in cache
-        self.cache[key] = node
+        # Create new node and store reference to the node in cache
+        self.cache[key] = ListNode(key, ret)
         # Add node to the front of the list
         self.add(self.cache[key])        
         return ret
@@ -49,10 +47,9 @@ class LRUCache:
         if key in self.cache:
             self.remove(self.cache[key])
             del[self.cache[key]]
-        # Create a new node and add it to the front
-        node = ListNode(key, value)
-        # Create reference for this node
-        self.cache[key] = node
+        # Create a new node + reference and add it to the front
+        # Create  for this node
+        self.cache[key] = ListNode(key, value)
         self.add(self.cache[key])
         # Remove from tail if needed
         if len(self.cache) > self.capacity:
