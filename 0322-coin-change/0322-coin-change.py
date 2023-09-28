@@ -3,33 +3,34 @@ class Solution:
         if amount == 0:
             return 0
         cache = {}
-        path = defaultdict(list)
         def dfs(remainder):
             if remainder in cache:
                 return cache[remainder]
             # base cases
             if remainder == 0:
-                return (0, [])
+                return [] # Start building path
             if remainder < 0:
-                return (-1, [])
+                return None
             
-            min_coins = +inf
+            min_len = +inf
             for coin in coins:
                 ret = dfs(remainder - coin)
-                ret_num = ret[0]
-                ret_path = ret[1]
-                if ret_num != -1:
-                    if min_coins > ret_num + 1:
-                        min_coins = ret_num + 1
-                        # Update path using this coins
-                        path[remainder] = ret_path.append(coin)
+                if ret is not None:
+                    if min_len > len(ret) + 1:
+                        min_len = len(ret) + 1
+                        best_path = ret.copy()
+                        best_path_coin = coin
                         
-            if not path[remainder]:
-                path[remainder] = []
-                   
-            cache[remainder] = (min_coins, path[remainder])
-            return cache[remainder]
-        
+            if min_len != +inf:
+                best_path.append(best_path_coin)
+                cache[remainder] = best_path
+                return best_path
+            
+            cache[remainder] = None
+            return None
+    
+    
         dfs(amount)
-        return cache[amount][0] if cache[amount][0] != +inf else -1
+        print(cache[amount])
+        return len(cache[amount]) if cache[amount] != None else -1
                 
