@@ -5,28 +5,26 @@ class Solution:
             return 0
         memo = {}
         def dfs(remainder):
-            # Check if we have already solved this problem
+            # Check cache
             if remainder in memo:
                 return memo[remainder]
             # Base cases
-            # 1. Solution not found in this path
-            if remainder < 0:
-                return -1
-            # 2. Solution found in this path
             if remainder == 0:
                 return 0
+            if remainder < 0:
+                return -1
             
-            # Try to use all the coins
+            # Minimize number of coins for this amount/remainder
             min_coins = +inf
+            # Check all the coins
             for coin in coins:
                 res = dfs(remainder - coin)
                 if res != -1:
-                    # This path lead to a solution, check if it's optimal
                     min_coins = min(min_coins, res + 1)
-            
-            # Cache the result before returning
+                    
             memo[remainder] = min_coins
-            # Return best solution we have found for this subproblem
-            return min_coins
+            return memo[remainder]
+        
         dfs(amount)
         return memo[amount] if memo[amount] != +inf else -1
+                
